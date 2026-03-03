@@ -34,7 +34,8 @@ description: |
 | `user-profile.sh <user_id>` | 获取用户主页 |
 | `track-topic.sh <话题> [选项]` | 热点跟踪报告 |
 | `export-long-image.sh` | 帖子导出为长图（白底黑字+图片拼接） |
-| `mcp-call.sh <tool> [args]` | 通用工具调用 |
+| `mcp-call.sh <tool> [args]` | 通用工具调用（支持超时/重试） |
+| `interact-safe.sh <like/comment> ...` | 互动稳妥入口（自动重试+必要时重启 MCP） |
 
 ## 快速开始
 
@@ -46,12 +47,18 @@ cd scripts/
 
 # 2. 启动服务
 ./start-mcp.sh
+# 若服务器无桌面但要可视化调试：
+./start-mcp.sh --headless=false
 
 # 3. 检查状态
 ./status.sh
 
 # 4. 搜索内容
 ./search.sh "春节旅游"
+
+# 5. 稳妥互动（推荐）
+./interact-safe.sh like <feed_id> <xsec_token>
+./interact-safe.sh comment <feed_id> <xsec_token> "我想来！"
 ```
 
 ## MCP 工具
@@ -105,6 +112,15 @@ EOF
 **per_image_text** 可选：如果原帖文字明确指向某张图（如"图7-9是青龙桥"），把说明放在对应图片上方。未指定则所有文字集中在文字块。
 
 **字体**：自动检测系统中文字体（STHeiti > Hiragino > Arial Unicode > Noto CJK）。
+
+## 稳定性执行规则（持久化）
+
+- 默认将 `interact-safe.sh` 作为点赞/评论入口，不直接裸调 `like_feed` / `post_comment_to_feed`。
+- 若互动失败，按顺序执行：
+  1) 延长超时并重试（`XHS_MCP_TIMEOUT`、`XHS_MCP_RETRIES`）
+  2) 失败后自动重启 MCP 再试一次
+- 在云服务器使用 `--headless=false` 时，优先使用已增强的 `start-mcp.sh`（自动管理 Xvfb）。
+- 读取类接口成功不代表写入类接口稳定；每次部署后至少做一次“点赞+评论”冒烟测试。
 
 ## 注意事项
 
