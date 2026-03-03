@@ -25,6 +25,16 @@
 
 基于 [xiaohongshu-mcp](https://github.com/xpzouying/xiaohongshu-mcp) 和 [XHS-Downloader](https://github.com/JoeanAmier/XHS-Downloader) 构建。
 
+## 致谢与改进说明
+
+本仓库在原封装项目 [@zhjiang22/openclaw-xhs](https://github.com/zhjiang22/openclaw-xhs) 的基础上做了稳定性增强。
+详细改进记录见：[RELEASE_NOTE.md](./RELEASE_NOTE.md)
+
+本仓库当前主要增强点：
+- 无桌面云服务器下的启动稳定性（`Xvfb` 自动管理）
+- 点赞/评论等互动操作稳定性（自动重试 + 恢复）
+
+
 ## 功能特性
 
 | 功能 | 说明 |

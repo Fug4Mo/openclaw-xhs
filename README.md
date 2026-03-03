@@ -25,6 +25,17 @@ AI-powered toolkit for **Xiaohongshu (小红书 / RedNote)** that turns your fav
 
 Built on [xiaohongshu-mcp](https://github.com/xpzouying/xiaohongshu-mcp) and [XHS-Downloader](https://github.com/JoeanAmier/XHS-Downloader).
 
+## Attribution & Improvements
+
+This repository includes reliability improvements **based on the original wrapper project** by [@zhjiang22](https://github.com/zhjiang22):
+- Upstream project: https://github.com/zhjiang22/openclaw-xhs
+- Improvement notes: [RELEASE_NOTE.md](./RELEASE_NOTE.md)
+
+Main improvements in this repo:
+- Better server startup reliability for no-desktop environments (`Xvfb` auto-management)
+- More resilient interaction flow for like/comment operations (retry + recovery)
+
+
 ## Features
 
 | Feature | Description |
